@@ -1,0 +1,41 @@
+CREATE TABLE `plant` (
+  `plant_id` int NOT NULL,
+  `name` text NOT NULL,
+  `description` text,
+  `price` float NOT NULL,
+  `seller` int NOT NULL,
+  `filename` text NOT NULL,
+  `postdate` date DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+INSERT INTO `plant` (`plant_id`, `name`, `description`, `price`, `seller`, `filename`, `postdate`) VALUES
+(1, 'Cactus', 'Spiky dude', 10, 1, 'http://placekitten.com/400/300', '2021-11-11'),
+(2, 'Aloe Vera', 'Medicine', 30, 2, 'http://placekitten.com/400/302', '2011-10-07');
+
+CREATE TABLE `user` (
+  `user_id` int NOT NULL,
+  `email` text NOT NULL,
+  `username` text NOT NULL,
+  `password` text NOT NULL,
+  `filename` text NOT NULL,
+  `role` int(1) NOT NULL DEFAULT '1'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+INSERT INTO `user` (`user_id`, `email`, `username`, `password`, `filename`, `role`) VALUES
+(1, 'admin@metropolia.fi', 'admin', 'asdf', 'http://placekitten.com/400/300', 0),
+(2, 'jane@metropolia.fi', 'Jane Doez', 'qwer', 'http://placekitten.com/400/300', 1),
+(3, 'john@metropolia.fi', 'John Doe', '1234', 'http://placekitten.com/400/300', 1);
+
+
+ALTER TABLE `wop_cat`
+  ADD PRIMARY KEY (`cat_id`);
+
+ALTER TABLE `wop_user`
+  ADD PRIMARY KEY (`user_id`);
+
+
+ALTER TABLE `wop_cat`
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+ALTER TABLE `wop_user`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
