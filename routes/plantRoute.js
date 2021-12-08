@@ -22,8 +22,8 @@ router
     .post(upload.single('plant'),
     // TODO: VAIHDA JA KORJAA
     body('name').notEmpty().escape(),
-    body('birthdate').isDate(),
-    body('weight').isNumeric(),
+    body('postdate').isDate(),
+    body('price').isNumeric(),
     plant_post)
 
     
@@ -35,8 +35,8 @@ router
     // TODO: VAIHDA JA KORJAA
     .put( 
         body('name').notEmpty().escape(),
-        body('birthdate').isDate(),
-        body('weight').isNumeric(),
+        body('postdate').isDate(),
+        body('price').isNumeric(),
         plant_put
     );
 

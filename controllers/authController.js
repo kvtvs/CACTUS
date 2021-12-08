@@ -9,7 +9,6 @@ const salt = bcrypt.genSaltSync(12);
 
 
 const login = (req, res, next) => {
-  // TODO: add passport authenticate
   passport.authenticate('local', { session: false }, (err, user, info) => {
       console.log('login info', err, user, info);
       if(err || !user){
@@ -38,18 +37,18 @@ const user_post = async (req, res, next) => {
 
   try {
       console.log('lomakkeesta ', req.body);
-      const {name, email, passwd} = req.body;
+      const {username, email, passwd} = req.body;
       // hash password
       const hash = bcrypt.hashSync(passwd, salt);
-      const tulos = await addUser(name, email, hash, next);
+      const tulos = await addUser(username, email, hash, next);
       if(tulos.affectedRows > 0){
           res.json({
-              message: "user added",
+              message: "Käyttäjä lisätty",
               user_id: tulos.insertId,
           });
         }
         else {
-          next(httpError('No user inserted', 400));
+          next(httpError('Käyttäjän luonti epäonnistui', 400));
         }
   } catch (error) {
       console.log('user_post error', error.message);

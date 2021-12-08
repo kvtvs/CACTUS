@@ -53,14 +53,14 @@ const plant_list_get = async (req, res, next) => {
       }
   
     try {
-        // TODO: KORJAA JA VAIHDA OIKEAT SARAKKEET
-        const { name, birthdate, weight, coords } = req.body;
+        // TODO: Miten saada käyttäjäid ja kuvat?
+        const { Nimi, Kuvaus, Hinta, Julkaisu_pvm, KäyttäjäID } = req.body;
         const tulos = await addPlant(
-          name,
-          weight,
-          req.user.user_id,
-          req.file.filename, 
-          birthdate,
+          Nimi,
+          Kuvaus,
+          Hinta,
+          Julkaisu_pvm,
+          req.user.KäyttäjäID,
           next
         );
         if(tulos.affectedRows > 0){
@@ -87,28 +87,26 @@ const plant_list_get = async (req, res, next) => {
     }
     // pvm VVVV-KK-PP esim 2010-05-28
     try {
-
-        // TODO: VAIHDA JA KORJAA
-      const { name, birthdate, weight } = req.body;
+      const { Nimi, Kuvaus, Hinta, Julkaisu_pvm } = req.body;
  
-      const owner = req.user.role === 0 ? req.body.owner : req.user.user_id;
+      // TODO: HUOM! KäyttäjäID?
+      const owner = req.user.Rooli === 0 ? req.body.owner : req.user.KäyttäjäID;
   
       const tulos = await modifyPlant(
-        name,
-        weight,
-        owner,
-        birthdate,
+        Nimi,
+        Kuvaus,
+        Hinta,
         req.params.id,
         req.user.role,
         next
       );
       if (tulos.affectedRows > 0) {
         res.json({
-          message: 'plant modified',
+          message: 'Ilmoitusta muokattu!',
           plant_id: tulos.insertId,
         });
       } else {
-        next(httpError('No plant modified', 400));
+        next(httpError('Ilmoituksen muokkaus epäonnistui', 400));
       }
     } catch (e) {
       console.log('plant_put error', e.message);
@@ -118,15 +116,15 @@ const plant_list_get = async (req, res, next) => {
   
   const plant_delete = async (req, res, next) => {
     try {
-      const vastaus = await deletePlant(req.params.id, req.user.user_id, req.user.role, next);
+      const vastaus = await deletePlant(req.params.TuoteID, req.user.KäyttäjäID, req.user.Rooli, next);
       if(vastaus.affectedRows > 0){
         res.json({
-        message: 'plant deleted',
+        message: 'Ilmoitus poistettu',
         plant_id: vastaus.insertId
       });
       }
       else {
-        next(httpError('No plants found', 404));
+        next(httpError('Ilmoitusta ei löydy', 404));
       }
     }
     catch (e) {

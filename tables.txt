@@ -1,20 +1,20 @@
 CREATE TABLE Käyttäjä
 (
-  KäyttäjäID INT NOT NULL,
-  Salasana VARCHAR NOT NULL,
-  Käyttäjänimi VARCHAR NOT NULL,
-  Sähköposti VARCHAR NOT NULL,
+  KäyttäjäID INT NOT NULL,  
+  Käyttäjänimi TEXT NOT NULL,
+  Sähköposti TEXT NOT NULL,
+  Salasana TEXT NOT NULL,
   Rooli INT NOT NULL,
   PRIMARY KEY (KäyttäjäID)
 );
 
 CREATE TABLE Tuote
 (
-  Nimi VARCHAR NOT NULL,
-  Kuvaus VARCHAR NOT NULL,
+  TuoteID INT NOT NULL,
+  Nimi TEXT NOT NULL,
+  Kuvaus TEXT NOT NULL,
   Hinta FLOAT NOT NULL,
   Julkaisu_pvm DATE NOT NULL,
-  TuoteID INT NOT NULL,
   KäyttäjäID INT NOT NULL,
   PRIMARY KEY (TuoteID),
   FOREIGN KEY (KäyttäjäID) REFERENCES Käyttäjä(KäyttäjäID)
@@ -23,7 +23,7 @@ CREATE TABLE Tuote
 CREATE TABLE Kuvat
 (
   Kuvan_ID INT NOT NULL,
-  Kuvan_sijainti VARCHAR NOT NULL,
+  Kuvan_sijainti TEXT NOT NULL,
   TuoteID INT NOT NULL,
   PRIMARY KEY (Kuvan_ID),
   FOREIGN KEY (TuoteID) REFERENCES Tuote(TuoteID)

@@ -16,7 +16,7 @@ const user_list_get = async (req, res, next) => {
       res.json(users);
     }
     else {
-      next('No users found', 404);
+      next('Käyttäjiä ei löydy', 404);
     }
   }
   catch (e) {
@@ -32,7 +32,7 @@ const user_get = async (req, res, next) => {
       res.json(vastaus.pop());
     }
     else {
-      next(httpError('No users found', 404));
+      next(httpError('Käyttäjiä ei löydy', 404));
     }
   }
   catch (e) {

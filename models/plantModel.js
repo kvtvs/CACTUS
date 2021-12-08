@@ -5,22 +5,21 @@ const pool = require('../database/db');
 const { httpError } = require('../utils/errors');
 const promisePool = pool.promise();
 
+
 const getAllPlants = async (next) => {
   try {
-    // TODO: KORJAA JA VAIHDA
     const [rows] = await promisePool.query(
       `SELECT
-      cat_id,
-      wop_cat.name,
-      weight,
-      owner,
-      filename,
-      birthdate,
-      coords,
-      wop_user.name as ownername
-      FROM wop_cat
-      JOIN wop_user ON
-      wop_cat.owner = wop_user.user_id`
+      TuoteID,
+      Tuote.Nimi,
+      Kuvaus,
+      Hinta,
+      Julkaisu_pvm,
+      KäyttäjäID,
+      Käyttäjä.Käyttäjänimi as myyjä
+      FROM Tuote
+      JOIN Käyttäjä ON
+      Tuote.KäyttäjäID = Käyttäjä.KäyttäjäID`
       );
     return rows;
   } catch (e) {
@@ -32,21 +31,19 @@ const getAllPlants = async (next) => {
 
 const getPlant = async (id, next) => {
   try {
-    // TODO: KORJAA JA VAIHDA
     const [rows] = await promisePool.execute(
       `SELECT
-      cat_id,
-      wop_cat.name,
-      weight,
-      owner,
-      filename,
-      birthdate,
-      coords,
-      wop_user.name as ownername
-      FROM wop_cat
-      JOIN wop_user ON
-      wop_cat.owner = wop_user.user_id
-      WHERE cat_id = ?`, 
+      TuoteID,
+      Tuote.Nimi,
+      Kuvaus,
+      Hinta,
+      Julkaisu_pvm,
+      KäyttäjäID,
+      Käyttäjä.Käyttäjänimi as myyjä
+      FROM Tuote
+      JOIN Käyttäjä ON
+      Tuote.KäyttäjäID = Käyttäjä.KäyttäjäID
+      WHERE TuoteID = ?`, 
       [id]
       );
     return rows;
@@ -56,12 +53,11 @@ const getPlant = async (id, next) => {
   }
 };
 
-// TODO: KORJAA JA VAIHDA
-const addPlant = async (name, weight, owner, filename, coords, birthdate, next) => {
+const addPlant = async (Nimi, Kuvaus, Hinta, Julkaisu_pvm, KäyttäjäID, next) => {
   try {
     const [rows] = await promisePool.execute(
-      'INSERT INTO wop_cat (name, weight, owner, filename, coords, birthdate) VALUES (?, ?, ?, ?, ?, ?)', 
-      [name, weight, owner, filename, birthdate, coords]
+      'INSERT INTO Tuote (TuoteID, Nimi, Kuvaus, Hinta, Julkaisu_pvm, KäyttäjäID) VALUES (?, ?, ?, ?, ?, ?)', 
+      [Nimi, Kuvaus, Hinta, Julkaisu_pvm, KäyttäjäID]
       );
     return rows;
   } catch (e) {
@@ -70,23 +66,21 @@ const addPlant = async (name, weight, owner, filename, coords, birthdate, next) 
   }
 };
 
-// TODO: KORJAA JA VAIHDA
 const modifyPlant = async (
-  name,
-  weight,
-  owner,
-  birthdate,
-  cat_id,
-  role,
+  Nimi,
+  Kuvaus,
+  Hinta,
+  TuoteID,
+  Rooli,
   next
 ) => {
   let sql =
-    'UPDATE wop_cat SET name = ?, weight = ?, birthdate = ? WHERE cat_id = ? AND owner = ?;';
-  let params = [name, weight, birthdate, cat_id, owner];
-  if (role === 0) {
+    'UPDATE Tuote SET Nimi = ?, Kuvaus = ?, Hinta = ? WHERE TuoteID = ? AND KäyttäjäID = ?;';
+  let params = [Nimi, Kuvaus, Hinta, TuoteID, KäyttäjäID];
+  if (Rooli === 0) {
     sql =
-      'UPDATE wop_cat SET name = ?, weight = ?, birthdate = ?, owner = ? WHERE cat_id = ?;';
-    params = [name, weight, birthdate, owner, cat_id];
+      'UPDATE Tuote SET Nimi = ?, Kuvaus = ?, Hinta = ?, KäyttäjäID = ? WHERE TuoteID = ?;';
+    params = [Nimi, Kuvaus, Hinta, TuoteID,];
   }
   console.log('sql', sql);
   try {
@@ -98,12 +92,12 @@ const modifyPlant = async (
   }
 };
 
-// TODO: KORJAA JA VAIHDA
-const deletePlant = async (id, owner_id, role, next) => {
-  let sql = 'DELETE FROM wop_cat WHERE cat_id = ? AND owner = ?';
-  let params = [id, owner_id];
-  if (role === 0){
-    sql = 'DELETE FROM wop_cat WHERE cat_id = ?';
+
+const deletePlant = async (TuoteID, KäyttäjäID, Rooli, next) => {
+  let sql = 'DELETE FROM Tuote WHERE TuoteID = ? AND KäyttäjäID = ?';
+  let params = [TuoteID, KäyttäjäID];
+  if (Rooli === 0){
+    sql = 'DELETE FROM Tuote WHERE TuoteID = ?';
     params = [id];
   }
   try {

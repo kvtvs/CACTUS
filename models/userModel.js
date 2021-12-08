@@ -6,7 +6,7 @@ const promisePool = pool.promise();
 const getAllUsers = async (next) => {
   try {
     const [rows] = await promisePool.query(
-      'SELECT user_id, email, username, role FROM user'
+      'SELECT KäyttäjäID, Käyttäjänimi, Sähköposti, Rooli FROM Käyttäjä'
       );
     return rows;
   } catch (e) {
@@ -19,7 +19,7 @@ const getAllUsers = async (next) => {
 const getUser = async (id, next) => {
   try {
     const [rows] = await promisePool.execute(
-      'SELECT user_id, email, username, role FROM user WHERE user_id = ?',
+      'SELECT KäyttäjäID, Käyttäjänimi, Sähköposti, Rooli FROM Käyttäjä WHERE KäyttäjäID = ?',
       [id]
       );
     return rows;
@@ -29,11 +29,11 @@ const getUser = async (id, next) => {
   }
 };
 
-const addUser = async (email, username, password, next) => {
+const addUser = async (Käyttäjänimi, Sähköposti, Salasana, next) => {
   try {
     const [rows] = await promisePool.execute(
-      'INSERT INTO wop_user (email, username, password) VALUES (?, ?, ?)',
-      [email, username, password]
+      'INSERT INTO Käyttäjä (Käyttäjänimi, Sähköposti, Salasana) VALUES (?, ?, ?)',
+      [Käyttäjänimi, Sähköposti, Salasana]
       );
     return rows;
   } catch (e) {
@@ -46,7 +46,7 @@ const getUserLogin = async (params) => {
   try {
     console.log(params);
     const [rows] = await promisePool.execute(
-        'SELECT * FROM user WHERE email = ?;',
+        'SELECT * FROM Käyttäjä WHERE Sähköposti = ?;',
         params);
     return rows;
   } catch (e) {
