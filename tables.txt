@@ -1,40 +1,39 @@
-CREATE TABLE `plant` (
-  `plant_id` int NOT NULL,
-  `name` text NOT NULL,
-  `description` text,
-  `price` float NOT NULL,
-  `seller` int NOT NULL,
-  `filename` text NOT NULL,
-  `postdate` date DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE Käyttäjä
+(
+  KäyttäjäID INT NOT NULL,
+  Salasana VARCHAR NOT NULL,
+  Käyttäjänimi VARCHAR NOT NULL,
+  Sähköposti VARCHAR NOT NULL,
+  Rooli INT NOT NULL,
+  PRIMARY KEY (KäyttäjäID)
+);
 
-INSERT INTO `plant` (`plant_id`, `name`, `description`, `price`, `seller`, `filename`, `postdate`) VALUES
-(1, 'Cactus', 'Spiky dude', 10, 1, 'http://placekitten.com/400/300', '2021-11-11'),
-(2, 'Aloe Vera', 'Medicine', 30, 2, 'http://placekitten.com/400/302', '2011-10-07');
+CREATE TABLE Tuote
+(
+  Nimi VARCHAR NOT NULL,
+  Kuvaus VARCHAR NOT NULL,
+  Hinta FLOAT NOT NULL,
+  Julkaisu_pvm DATE NOT NULL,
+  TuoteID INT NOT NULL,
+  KäyttäjäID INT NOT NULL,
+  PRIMARY KEY (TuoteID),
+  FOREIGN KEY (KäyttäjäID) REFERENCES Käyttäjä(KäyttäjäID)
+);
 
-CREATE TABLE `user` (
-  `user_id` int NOT NULL,
-  `email` text NOT NULL,
-  `username` text NOT NULL,
-  `password` text NOT NULL,
-  `role` int(1) NOT NULL DEFAULT '1'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE Kuvat
+(
+  Kuvan_ID INT NOT NULL,
+  Kuvan_sijainti VARCHAR NOT NULL,
+  TuoteID INT NOT NULL,
+  PRIMARY KEY (Kuvan_ID),
+  FOREIGN KEY (TuoteID) REFERENCES Tuote(TuoteID)
+);
 
-INSERT INTO `user` (`user_id`, `email`, `username`, `password`, `role`) VALUES
-(1, 'admin@metropolia.fi', 'admin', 'asdf', 0),
-(2, 'jane@metropolia.fi', 'Jane Doez', 'qwer', 1),
-(3, 'john@metropolia.fi', 'John Doe', '1234', 1);
-
-
-ALTER TABLE `plant`
-  ADD PRIMARY KEY (`plant_id`);
-
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`user_id`);
-
-
-ALTER TABLE `plant`
-  MODIFY `plant_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
-ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+CREATE TABLE tykkäys
+(
+  KäyttäjäID INT NOT NULL,
+  TuoteID INT NOT NULL,
+  PRIMARY KEY (KäyttäjäID, TuoteID),
+  FOREIGN KEY (KäyttäjäID) REFERENCES Käyttäjä(KäyttäjäID),
+  FOREIGN KEY (TuoteID) REFERENCES Tuote(TuoteID)
+);
