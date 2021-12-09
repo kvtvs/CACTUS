@@ -53,8 +53,7 @@ const plant_list_get = async (req, res, next) => {
       }
   
     try {
-        // TODO: Miten saada käyttäjäid ja kuvat?
-        const { Nimi, Kuvaus, Hinta, Julkaisu_pvm, KäyttäjäID } = req.body;
+        const { Nimi, Kuvaus, Hinta, Julkaisu_pvm } = req.body;
         const tulos = await addPlant(
           Nimi,
           Kuvaus,
@@ -85,9 +84,8 @@ const plant_list_get = async (req, res, next) => {
       next(httpError('invalid data', 400));
       return;
     }
-    // pvm VVVV-KK-PP esim 2010-05-28
     try {
-      const { Nimi, Kuvaus, Hinta, Julkaisu_pvm } = req.body;
+      const { Nimi, Kuvaus, Hinta } = req.body;
  
       // TODO: HUOM! KäyttäjäID?
       const owner = req.user.Rooli === 0 ? req.body.owner : req.user.KäyttäjäID;
@@ -97,7 +95,7 @@ const plant_list_get = async (req, res, next) => {
         Kuvaus,
         Hinta,
         req.params.id,
-        req.user.role,
+        req.user.Rooli,
         next
       );
       if (tulos.affectedRows > 0) {
