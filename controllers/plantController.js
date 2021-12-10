@@ -7,7 +7,7 @@ const { httpError } = require('../utils/errors');
 
 const plant_list_get = async (req, res, next) => {
     try {
-      const plant = await getAllPlants(next);
+      const plants = await getAllPlants(next);
       if(plants.length > 0){
         res.json(plants);
       }

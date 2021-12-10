@@ -13,11 +13,11 @@ passport.use(new Strategy(
       const params = [username];
       try {
         const [user] = await getUserLogin(params);
-        console.log('Local strategy', user); // result is binary row
+        // console.log('Local strategy', user); // result is binary row
         if (user === undefined) {
           return done(null, false, {message: 'Incorrect email.'});
         }
-        if (!bcrypt.compareSync(password, user.password)) {
+        if (!bcrypt.compareSync(password, user.Salasana)) {
           return done(null, false);
         }
         return done(null, {...user}, {message: 'Logged In Successfully'}); // use spread syntax to create shallow copy to get rid of binary row type
@@ -35,7 +35,7 @@ passport.use(new JWTStrategy(
         secretOrKey: process.env.JWT_SECRET
     }, 
     (jwtPayload, done)=>{
-        console.log('Payload', jwtPayload);
+        //console.log('Payload', jwtPayload);
         done(null, jwtPayload);
     }
    )

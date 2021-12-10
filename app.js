@@ -25,9 +25,11 @@ app.use(express.static('./uploads/'));
 app.use(passport.initialize());
 
 app.use('/auth', authRoute);
-app.use('/plant', passport.authenticate('jwt', {session: false}), plantRoute);
-app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
+//app.use('/plant', passport.authenticate('jwt', {session: false}), plantRoute);
+//app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
 
+app.use('/plant', plantRoute);
+app.use('/user', userRoute);
 
 app.use((req, res, next) => {
     const err = httpError('Not Found', 404);

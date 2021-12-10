@@ -10,7 +10,7 @@ const salt = bcrypt.genSaltSync(12);
 
 const login = (req, res, next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
-      console.log('login info', err, user, info);
+      //console.log('login info', err, user, info);
       if(err || !user){
           next(httpError('Invalid credentials', 400));
           return;

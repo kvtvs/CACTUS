@@ -15,8 +15,7 @@ const getAllPlants = async (next) => {
       Hinta,
       Filename,
       Julkaisu_pvm,
-      KäyttäjäID,
-      Käyttäjä.Käyttäjänimi as seller
+      Tuote.KäyttäjäID
       FROM Tuote
       JOIN Käyttäjä ON
       Tuote.KäyttäjäID = Käyttäjä.KäyttäjäID`
@@ -39,8 +38,7 @@ const getPlant = async (id, next) => {
       Hinta,
       Filename,
       Julkaisu_pvm,
-      KäyttäjäID,
-      Käyttäjä.Käyttäjänimi as myyjä
+      Tuote.KäyttäjäID
       FROM Tuote
       JOIN Käyttäjä ON
       Tuote.KäyttäjäID = Käyttäjä.KäyttäjäID
