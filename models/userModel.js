@@ -1,5 +1,5 @@
 'use strict';
-const pool = require('../database/db');
+const pool = require('../database/db.js');
 const { httpError } = require('../utils/errors');
 const promisePool = pool.promise();
 

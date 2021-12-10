@@ -53,11 +53,12 @@ const plant_list_get = async (req, res, next) => {
       }
   
     try {
-        const { Nimi, Kuvaus, Hinta, Julkaisu_pvm } = req.body;
+        const { Nimi, Kuvaus, Hinta, Filename, Julkaisu_pvm } = req.body;
         const tulos = await addPlant(
           Nimi,
           Kuvaus,
           Hinta,
+          Filename,
           Julkaisu_pvm,
           req.user.KäyttäjäID,
           next

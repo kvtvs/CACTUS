@@ -14,6 +14,7 @@ CREATE TABLE Tuote
   Nimi TEXT NOT NULL,
   Kuvaus TEXT NOT NULL,
   Hinta FLOAT NOT NULL,
+  Filename TEXT,
   Julkaisu_pvm DATE NOT NULL,
   KäyttäjäID INT NOT NULL,
   PRIMARY KEY (TuoteID),
@@ -29,7 +30,7 @@ CREATE TABLE Kuvat
   FOREIGN KEY (TuoteID) REFERENCES Tuote(TuoteID)
 );
 
-CREATE TABLE tykkäys
+CREATE TABLE Tykkäys
 (
   KäyttäjäID INT NOT NULL,
   TuoteID INT NOT NULL,

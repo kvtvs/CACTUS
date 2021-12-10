@@ -20,10 +20,9 @@ router
     .route('/')
     .get(plant_list_get)
     .post(upload.single('plant'),
-    // TODO: VAIHDA JA KORJAA
-    body('name').notEmpty().escape(),
-    body('postdate').isDate(),
-    body('price').isNumeric(),
+    body('Nimi').notEmpty().escape(),
+    body('Julkaisu_pvm').isDate(),
+    body('Hinta').isNumeric(),
     plant_post)
 
     
@@ -32,11 +31,10 @@ router
     .route('/:id')
     .get(plant_get)
     .delete(plant_delete)
-    // TODO: VAIHDA JA KORJAA
     .put( 
-        body('name').notEmpty().escape(),
-        body('postdate').isDate(),
-        body('price').isNumeric(),
+        body('Nimi').notEmpty().escape(),
+        body('Julkaisu_pvm').isDate(),
+        body('Hinta').isNumeric(),
         plant_put
     );
 

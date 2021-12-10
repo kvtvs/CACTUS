@@ -1,7 +1,6 @@
 'use strict';
 
-
-const pool = require('../database/db');
+const pool = require('../database/db.js');
 const { httpError } = require('../utils/errors');
 const promisePool = pool.promise();
 
@@ -14,6 +13,7 @@ const getAllPlants = async (next) => {
       Tuote.Nimi,
       Kuvaus,
       Hinta,
+      Filename,
       Julkaisu_pvm,
       KäyttäjäID,
       Käyttäjä.Käyttäjänimi as seller
@@ -37,6 +37,7 @@ const getPlant = async (id, next) => {
       Tuote.Nimi,
       Kuvaus,
       Hinta,
+      Filename,
       Julkaisu_pvm,
       KäyttäjäID,
       Käyttäjä.Käyttäjänimi as myyjä
@@ -53,11 +54,11 @@ const getPlant = async (id, next) => {
   }
 };
 
-const addPlant = async (Nimi, Kuvaus, Hinta, Julkaisu_pvm, KäyttäjäID, next) => {
+const addPlant = async (Nimi, Kuvaus, Hinta, Filename, Julkaisu_pvm, KäyttäjäID, next) => {
   try {
     const [rows] = await promisePool.execute(
-      'INSERT INTO Tuote (TuoteID, Nimi, Kuvaus, Hinta, Julkaisu_pvm, KäyttäjäID) VALUES (?, ?, ?, ?, ?, ?)', 
-      [Nimi, Kuvaus, Hinta, Julkaisu_pvm, KäyttäjäID]
+      'INSERT INTO Tuote (TuoteID, Nimi, Kuvaus, Hinta, Filename, Julkaisu_pvm, KäyttäjäID) VALUES (?, ?, ?, ?, ?, ?, ?)', 
+      [Nimi, Kuvaus, Hinta, Filename, Julkaisu_pvm, KäyttäjäID]
       );
     return rows;
   } catch (e) {
