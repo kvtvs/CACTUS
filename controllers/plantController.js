@@ -88,7 +88,6 @@ const plant_list_get = async (req, res, next) => {
     try {
       const { Nimi, Kuvaus, Hinta } = req.body;
  
-      // TODO: HUOM! KäyttäjäID?
       const owner = req.user.Rooli === 0 ? req.body.owner : req.user.KäyttäjäID;
   
       const tulos = await modifyPlant(
