@@ -20,13 +20,12 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 app.use(express.static('./uploads/'));
-//app.use('/thumbnails', express.static('thumbnails'));
 
 app.use(passport.initialize());
 
 app.use('/auth', authRoute);
-//app.use('/plant', passport.authenticate('jwt', {session: false}), plantRoute);
-//app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
+app.use('/plant', passport.authenticate('jwt', {session: false}), plantRoute);
+app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
 
 app.use('/plant', plantRoute);
 app.use('/user', userRoute);
