@@ -52,11 +52,11 @@ const getPlant = async (id, next) => {
   }
 };
 
-const addPlant = async (Nimi, Kuvaus, Hinta, Filename, Julkaisu_pvm, KäyttäjäID, next) => {
+const addPlant = async (Nimi, Kuvaus, Hinta, Filename, KäyttäjäID, next) => {
   try {
     const [rows] = await promisePool.execute(
-      'INSERT INTO Tuote (TuoteID, Nimi, Kuvaus, Hinta, Filename, Julkaisu_pvm, KäyttäjäID) VALUES (?, ?, ?, ?, ?, ?, ?)', 
-      [Nimi, Kuvaus, Hinta, Filename, Julkaisu_pvm, KäyttäjäID]
+      'INSERT INTO Tuote ( Nimi, Kuvaus, Hinta, Filename, KäyttäjäID) VALUES (?, ?, ?, ?, ?)', 
+      [Nimi, Kuvaus, Hinta, Filename, KäyttäjäID]
       );
     return rows;
   } catch (e) {

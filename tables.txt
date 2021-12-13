@@ -1,6 +1,6 @@
 CREATE TABLE Käyttäjä
 (
-  KäyttäjäID INT NOT NULL,  
+  KäyttäjäID INT NOT NULL AUTO_INCREMENT,  
   Käyttäjänimi TEXT NOT NULL,
   Sähköposti TEXT NOT NULL,
   Salasana TEXT NOT NULL,
@@ -10,12 +10,12 @@ CREATE TABLE Käyttäjä
 
 CREATE TABLE Tuote
 (
-  TuoteID INT NOT NULL,
+  TuoteID INT NOT NULL AUTO_INCREMENT,
   Nimi TEXT NOT NULL,
   Kuvaus TEXT NOT NULL,
   Hinta FLOAT NOT NULL,
   Filename TEXT,
-  Julkaisu_pvm DATE NOT NULL,
+  Julkaisu_pvm DATE NOT NULL CURRENT_TIMESTAMP(),
   KäyttäjäID INT NOT NULL,
   PRIMARY KEY (TuoteID),
   FOREIGN KEY (KäyttäjäID) REFERENCES Käyttäjä(KäyttäjäID)
@@ -23,7 +23,7 @@ CREATE TABLE Tuote
 
 CREATE TABLE Kuvat
 (
-  Kuvan_ID INT NOT NULL,
+  Kuvan_ID INT NOT NULL AUTO_INCREMENT,
   Kuvan_sijainti TEXT NOT NULL,
   TuoteID INT NOT NULL,
   PRIMARY KEY (Kuvan_ID),

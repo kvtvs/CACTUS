@@ -19,10 +19,10 @@ const router = express.Router();
 router
     .route('/')
     .get(plant_list_get)
-    .post(upload.single('plant'),
-    body('Nimi').notEmpty().escape(),
-    body('Julkaisu_pvm').isDate(),
-    body('Hinta').isNumeric(),
+    .post(upload.single('photo1'),
+    body('name').notEmpty().escape(),
+    body('description').notEmpty(),
+    body('price').isNumeric(),
     plant_post)
 
     

@@ -29,11 +29,11 @@ const getUser = async (id, next) => {
   }
 };
 
-const addUser = async (Käyttäjänimi, Sähköposti, Salasana, next) => {
+const addUser = async (username, email, passwd, next) => {
   try {
     const [rows] = await promisePool.execute(
       'INSERT INTO Käyttäjä (Käyttäjänimi, Sähköposti, Salasana) VALUES (?, ?, ?)',
-      [Käyttäjänimi, Sähköposti, Salasana]
+      [username, email, passwd]
       );
     return rows;
   } catch (e) {

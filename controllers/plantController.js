@@ -53,14 +53,14 @@ const plant_list_get = async (req, res, next) => {
       }
   
     try {
-        const { Nimi, Kuvaus, Hinta, Filename, Julkaisu_pvm } = req.body;
+        const { name, description, price } = req.body;
         const tulos = await addPlant(
-          Nimi,
-          Kuvaus,
-          Hinta,
-          Filename,
-          Julkaisu_pvm,
-          req.user.KäyttäjäID,
+          name,
+          description,
+          price,
+          req.file.filename,
+          //req.user.KäyttäjäID,
+          1,
           next
         );
         if(tulos.affectedRows > 0){
