@@ -43,7 +43,7 @@ const user_post = async (req, res, next) => {
       const tulos = await addUser(username, email, hash, next);
       if(tulos.affectedRows > 0){
           res.json({
-              message: "Käyttäjä lisätty",
+              message: "Käyttäjä lisätty, nyt voit kirjautua sisään!",
               user_id: tulos.insertId,
           });
         }

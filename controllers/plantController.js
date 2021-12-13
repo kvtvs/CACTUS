@@ -12,7 +12,7 @@ const plant_list_get = async (req, res, next) => {
         res.json(plants);
       }
       else {
-        next('No plants found', 404);
+        next('Tuotteita ei löydy', 404);
       }
     }
     catch (e) {
@@ -28,7 +28,7 @@ const plant_list_get = async (req, res, next) => {
         res.json(vastaus.pop());
       }
       else {
-        next(httpError('No plants found', 404));
+        next(httpError('Tuotteita ei löydy', 404));
       }
     }
     catch (e) {
@@ -43,11 +43,11 @@ const plant_list_get = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()){
       console.log('plant_post validation', errors.array());
-      next(httpError('invalid data', 400));
+      next(httpError('Epäsopivat tiedot, kokeile uudestaan', 400));
       return;
     }
     if (!req.file){
-      const err = httpError('file not valid', 400);
+      const err = httpError('Tiedostomuoto ei käy, kokeile jotain muuta', 400);
       next(err);
       return;
       }
@@ -59,17 +59,16 @@ const plant_list_get = async (req, res, next) => {
           description,
           price,
           req.file.filename,
-          //req.user.KäyttäjäID,
-          1,
+          req.user.KäyttäjäID,
           next
         );
         if(tulos.affectedRows > 0){
           res.json({
-              message: "plant added",
+              message: "Tuote lisätty",
               plant_id: tulos.insertId,
           });
         } else {
-          next(httpError('No plant inserted', 400));
+          next(httpError('Tuotetta ei lisätty', 400));
         }
     } catch (error) {
       console.log('plant_post error', error.message);
@@ -86,14 +85,14 @@ const plant_list_get = async (req, res, next) => {
       return;
     }
     try {
-      const { Nimi, Kuvaus, Hinta } = req.body;
+      const { name, price, description, } = req.body;
  
       const owner = req.user.Rooli === 0 ? req.body.owner : req.user.KäyttäjäID;
   
       const tulos = await modifyPlant(
-        Nimi,
-        Kuvaus,
-        Hinta,
+        name,
+        description,
+        price,
         req.params.id,
         req.user.Rooli,
         next
