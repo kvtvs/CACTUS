@@ -32,9 +32,9 @@ router
     .get(plant_get)
     .delete(plant_delete)
     .put( 
-        body('Nimi').notEmpty().escape(),
-        body('Julkaisu_pvm').isDate(),
-        body('Hinta').isNumeric(),
+        body('name').notEmpty().escape(),
+        body('description').notEmpty(),
+        body('pprice').isNumeric(),
         plant_put
     );
 
