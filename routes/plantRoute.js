@@ -34,7 +34,7 @@ router
     .put( 
         body('name').notEmpty().escape(),
         body('description').notEmpty(),
-        body('pprice').isNumeric(),
+        body('price').isNumeric(),
         plant_put
     );
 
