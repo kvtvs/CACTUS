@@ -70,17 +70,11 @@ const modifyPlant = async (
   Kuvaus,
   Hinta,
   TuoteID,
-  Rooli,
   next
 ) => {
   let sql =
     'UPDATE Tuote SET Nimi = ?, Kuvaus = ?, Hinta = ? WHERE TuoteID = ? AND KäyttäjäID = ?;';
   let params = [Nimi, Kuvaus, Hinta, TuoteID, KäyttäjäID];
-  if (Rooli === 0) {
-    sql =
-      'UPDATE Tuote SET Nimi = ?, Kuvaus = ?, Hinta = ?, KäyttäjäID = ? WHERE TuoteID = ?;';
-    params = [Nimi, Kuvaus, Hinta, TuoteID,];
-  }
   console.log('sql', sql);
   try {
     const [rows] = await promisePool.execute(sql, params);
@@ -92,13 +86,9 @@ const modifyPlant = async (
 };
 
 
-const deletePlant = async (TuoteID, KäyttäjäID, Rooli, next) => {
+const deletePlant = async (TuoteID, KäyttäjäID, next) => {
   let sql = 'DELETE FROM Tuote WHERE TuoteID = ? AND KäyttäjäID = ?';
   let params = [TuoteID, KäyttäjäID];
-  if (Rooli === 0){
-    sql = 'DELETE FROM Tuote WHERE TuoteID = ?';
-    params = [id];
-  }
   try {
     const [rows] = await promisePool.execute(
        sql,
