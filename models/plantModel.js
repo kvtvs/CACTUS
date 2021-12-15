@@ -18,7 +18,8 @@ const getAllPlants = async (next) => {
       Tuote.KäyttäjäID
       FROM Tuote
       JOIN Käyttäjä ON
-      Tuote.KäyttäjäID = Käyttäjä.KäyttäjäID`
+      Tuote.KäyttäjäID = Käyttäjä.KäyttäjäID
+      ORDER BY TuoteID DESC`
       );
     return rows;
   } catch (e) {
@@ -67,9 +68,10 @@ const addPlant = async (Nimi, Kuvaus, Hinta, Filename, KäyttäjäID, next) => {
 
 const modifyPlant = async (
   Nimi,
-  Kuvaus,
   Hinta,
+  Kuvaus,
   TuoteID,
+  KäyttäjäID,
   next
 ) => {
   let sql =

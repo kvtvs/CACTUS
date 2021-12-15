@@ -85,7 +85,7 @@ const plant_list_get = async (req, res, next) => {
       return;
     }
     try {
-      const { name, price, description, } = req.body;
+      const { name, price, description } = req.body;
  
   
       const tulos = await modifyPlant(
@@ -93,6 +93,7 @@ const plant_list_get = async (req, res, next) => {
         price,
         description,
         req.params.id,
+        req.user.KäyttäjäID,
         next
       );
       if (tulos.affectedRows > 0) {
@@ -110,8 +111,9 @@ const plant_list_get = async (req, res, next) => {
   };
   
   const plant_delete = async (req, res, next) => {
+    console.log('plant_delete', req.body, req.params);
     try {
-      const vastaus = await deletePlant(req.params.TuoteID, req.user.KäyttäjäID, next);
+      const vastaus = await deletePlant(req.params.id, req.user.KäyttäjäID, next);
       if(vastaus.affectedRows > 0){
         res.json({
         message: 'Ilmoitus poistettu',
