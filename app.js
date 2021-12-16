@@ -24,8 +24,8 @@ app.use(express.static('./uploads/'));
 app.use(passport.initialize());
 
 app.use('/auth', authRoute);
-app.use('/plant', passport.authenticate('jwt', {session: false}), plantRoute);
-app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
+//app.use('/plant', passport.authenticate('jwt', {session: false}), plantRoute);
+//app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
 
 app.use('/plant', plantRoute);
 app.use('/user', userRoute);
@@ -43,3 +43,4 @@ app.use((err, req, res, next) => {
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
+app.use(express.static('public'));
