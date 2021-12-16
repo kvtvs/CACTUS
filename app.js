@@ -33,7 +33,7 @@ app.use('/user', userRoute);
 app.use((req, res, next) => {
     const err = httpError('Not Found', 404);
     next(err);
-}).
+})
 
 app.use((err, req, res, next) => {
     res.status(err.status || 500).json({
