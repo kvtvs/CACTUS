@@ -12,8 +12,15 @@ const { Passport } = require('passport');
 
 
 const app = express();
-const port = 3000;
+
 app.use(cors());
+
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+if (process.env.NODE_ENV === 'production') {
+  require('./utils/production')(app, process.env.PORT, process.env.HTTPS_PORT);
+} else {
+  require('./utils/localhost')(app, process.env.PORT);
+}
 
 
 app.use(express.json());
@@ -24,8 +31,8 @@ app.use(express.static('./uploads/'));
 app.use(passport.initialize());
 
 app.use('/auth', authRoute);
-app.use('/plant', passport.authenticate('jwt', {session: false}), plantRoute);
-app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
+//app.use('/plant', passport.authenticate('jwt', {session: false}), plantRoute);
+//app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
 
 app.use('/plant', plantRoute);
 app.use('/user', userRoute);
@@ -41,6 +48,6 @@ app.use((err, req, res, next) => {
     });
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
 
 app.use(express.static('public'));
