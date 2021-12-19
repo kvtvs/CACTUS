@@ -16,7 +16,6 @@ const plant_list_get = async (req, res, next) => {
       }
     }
     catch (e) {
-      console.log('plant_list_get error', e.message);
       next(httpError('internal server error', 500));
     }
   };
@@ -32,17 +31,14 @@ const plant_list_get = async (req, res, next) => {
       }
     }
     catch (e) {
-      console.log('plant_get error', e.message);
       next(httpError('internal server error', 500));
     }
   };
   
   const plant_post = async (req, res, next) => {
-    // päivämäärä VVVV-KK-PP esim 2015-05-15
-    console.log('plant_post', req.body, req.file, req.user);
+    // date in YYYY-MM-DD for example 2015-05-15
     const errors = validationResult(req);
     if (!errors.isEmpty()){
-      console.log('plant_post validation', errors.array());
       next(httpError('Epäsopivat tiedot, kokeile uudestaan', 400));
       return;
     }
@@ -71,16 +67,13 @@ const plant_list_get = async (req, res, next) => {
           next(httpError('Tuotetta ei lisätty', 400));
         }
     } catch (error) {
-      console.log('plant_post error', error.message);
       next(httpError('internal server error', 500));
     }
   };
   
   const plant_put = async (req, res, next) => {
-    console.log('plant_put', req.body, req.params);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log('plant_put validation', errors.array());
       next(httpError('invalid data', 400));
       return;
     }
@@ -105,13 +98,11 @@ const plant_list_get = async (req, res, next) => {
         next(httpError('Ilmoituksen muokkaus epäonnistui', 400));
       }
     } catch (e) {
-      console.log('plant_put error', e.message);
       next(httpError('internal server error', 500));
     }
   };
   
   const plant_delete = async (req, res, next) => {
-    console.log('plant_delete', req.body, req.params);
     try {
       const vastaus = await deletePlant(req.params.id, req.user.KäyttäjäID, next);
       if(vastaus.affectedRows > 0){
@@ -125,7 +116,6 @@ const plant_list_get = async (req, res, next) => {
       }
     }
     catch (e) {
-      console.log('plant_delete error', e.message);
       next(httpError('internal server error', 500));
     }
   };

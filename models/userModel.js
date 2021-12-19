@@ -44,13 +44,11 @@ const addUser = async (username, email, passwd, next) => {
 
 const getUserLogin = async (params) => {
   try {
-    console.log(params);
     const [rows] = await promisePool.execute(
         'SELECT * FROM Käyttäjä WHERE Sähköposti = ?;',
         params);
     return rows;
   } catch (e) {
-    console.log('error', e.message);
     next(httpError('Database error', 500));
   }
 };

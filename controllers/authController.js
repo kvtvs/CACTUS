@@ -10,7 +10,6 @@ const salt = bcrypt.genSaltSync(12);
 
 const login = (req, res, next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
-      //console.log('login info', err, user, info);
       if(err || !user){
           next(httpError('Invalid credentials', 400));
           return;
@@ -30,13 +29,11 @@ const login = (req, res, next) => {
 const user_post = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()){
-    console.log('user_post validation', errors.array());
     next(httpError('Invalid data', 400))
     return ;
   }
 
   try {
-      console.log('lomakkeesta ', req.body);
       const {username, email, passwd} = req.body;
       // hash password
       const hash = bcrypt.hashSync(passwd, salt);
@@ -51,7 +48,6 @@ const user_post = async (req, res, next) => {
           next(httpError('Käyttäjän luonti epäonnistui', 400));
         }
   } catch (error) {
-      console.log('user_post error', error.message);
       next(httpError('internal server error', 500));
   }
 

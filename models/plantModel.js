@@ -77,7 +77,6 @@ const modifyPlant = async (
   let sql =
     'UPDATE Tuote SET Nimi = ?, Kuvaus = ?, Hinta = ? WHERE TuoteID = ? AND KäyttäjäID = ?;';
   let params = [Nimi, Kuvaus, Hinta, TuoteID, KäyttäjäID];
-  console.log('sql', sql);
   try {
     const [rows] = await promisePool.execute(sql, params);
     return rows;
