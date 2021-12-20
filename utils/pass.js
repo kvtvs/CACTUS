@@ -13,7 +13,7 @@ passport.use(new Strategy(
       const params = [username];
       try {
         const [user] = await getUserLogin(params);
-        // console.log('Local strategy', user); // result is binary row
+         console.log('Local strategy', user); // result is binary row
         if (user === undefined) {
           return done(null, false, {message: 'Incorrect email.'});
         }
@@ -22,6 +22,7 @@ passport.use(new Strategy(
         }
         return done(null, {...user}, {message: 'Logged In Successfully'}); // use spread syntax to create shallow copy to get rid of binary row type
       } catch (err) {
+        console.log(err);
         return done(err);
       }
     })
